@@ -2,13 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/fragment1"
-        android:icon="@drawable/ic_launcher_background"
-        android:title="Fragment1"/>
+        android:id="@+id/list"
+        android:icon="@drawable/ic_list"
+        android:title="@string/list" />
 
     <item
-        android:id="@+id/fragment2"
-        android:icon="@mipmap/ic_launcher"
-        android:title="Fragment2"/>
+        android:id="@+id/edit_database"
+        android:icon="@drawable/ic_edit"
+        android:title="@string/edit"/>
 
 </menu>

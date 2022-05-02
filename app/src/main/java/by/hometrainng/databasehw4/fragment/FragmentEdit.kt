@@ -5,14 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import by.hometrainng.databasehw4.R
-import by.hometrainng.databasehw4.databinding.FragmentBottomNavBinding
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupWithNavController
+import by.hometrainng.databasehw4.databinding.FragmentEditDatabaseBinding
 
-class FragmentBottomNav: Fragment() {
+class FragmentEdit: Fragment() {
 
-    private var _binding: FragmentBottomNavBinding? = null
+    private var _binding: FragmentEditDatabaseBinding? = null
     private val binding get() = requireNotNull(_binding)
 
     override fun onCreateView(
@@ -20,7 +17,7 @@ class FragmentBottomNav: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return FragmentBottomNavBinding.inflate(inflater, container, false)
+        return FragmentEditDatabaseBinding.inflate(inflater, container, false)
             .also { _binding = it }
             .root
     }
@@ -29,9 +26,7 @@ class FragmentBottomNav: Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
-            val bottomNavController = (childFragmentManager.findFragmentById(R.id.page_container) as NavHostFragment)
-                .navController
-            bottomNavigation.setupWithNavController(bottomNavController)
+            description.text = "Привет"
         }
     }
 
