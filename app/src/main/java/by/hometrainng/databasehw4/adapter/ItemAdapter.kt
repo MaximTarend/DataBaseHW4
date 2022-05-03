@@ -42,9 +42,7 @@ class ListElementViewHolder(
 ): RecyclerView.ViewHolder(binding.root) {
     fun bind (item: ListElement) {
         with(binding) {
-            id.text = item.id.toString()
-            firstName.text = item.firstName
-            lastName.text = item.lastName
+            user.text = item.firstName
         }
     }
 }
