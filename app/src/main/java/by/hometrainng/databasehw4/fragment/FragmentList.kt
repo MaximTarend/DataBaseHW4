@@ -1,5 +1,6 @@
 package by.hometrainng.databasehw4.fragment
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.hometrainng.databasehw4.adapter.ItemAdapter
 import by.hometrainng.databasehw4.appDatabase
+import by.hometrainng.databasehw4.database.UserDao
 import by.hometrainng.databasehw4.databinding.FragmentListBinding
 import by.hometrainng.databasehw4.dialog.FragmentEditDialog
 
@@ -18,8 +20,10 @@ class FragmentList: Fragment() {
     private val binding get() = requireNotNull(_binding)
 
     private val adapter by lazy {
-        ItemAdapter(requireContext()) {
+        ItemAdapter(requireContext(), {
             showEditCustomDialog(it.id)
+        }) {
+            showDeleteDialog(it.id)
         }
     }
 
@@ -63,9 +67,27 @@ class FragmentList: Fragment() {
     private fun showEditCustomDialog(id: Long) {
         FragmentEditDialog.getInstance(id)
             .show(childFragmentManager, null)
+        adapter.submitList(userDao.getUsers())
+    }
+
+    private fun showDeleteDialog(id: Long) {
+        AlertDialog.Builder(requireContext())
+            .setTitle(DELETE_DIALOG_TITLE)
+            .setMessage(DELETE_DIALOG_MESSAGE)
+            .setPositiveButton(YES_BUTTON) { _, _ ->
+                val user = userDao.getUserById(id)
+                userDao.delete(user)
+                adapter.submitList(userDao.getUsers())
+            }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
     }
 
     companion object {
-        private const val DECORATION_SPACE = 15
+        const val DELETE_DIALOG_TITLE = "Delete User"
+        const val DELETE_DIALOG_MESSAGE = "Do you really want to delete this User?"
+        const val YES_BUTTON = "YES"
+
+
     }
 }
