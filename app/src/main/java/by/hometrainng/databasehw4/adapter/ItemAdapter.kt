@@ -43,7 +43,8 @@ class UserViewHolder(
 ): RecyclerView.ViewHolder(binding.root) {
     fun bind (item: User) {
         with(binding) {
-            user.text = item.firstName
+            firstName.text = item.firstName
+            lastName.text = item.lastName
         }
     }
 }

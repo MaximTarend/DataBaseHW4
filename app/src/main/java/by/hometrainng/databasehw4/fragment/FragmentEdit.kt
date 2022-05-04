@@ -9,7 +9,6 @@ import by.hometrainng.databasehw4.appDatabase
 import by.hometrainng.databasehw4.databinding.FragmentEditDatabaseBinding
 import by.hometrainng.databasehw4.extentions.getTextOrSetError
 import by.hometrainng.databasehw4.model.User
-import by.hometrainng.databasehw4.model.UserList
 
 class FragmentEdit: Fragment() {
 
@@ -43,27 +42,18 @@ class FragmentEdit: Fragment() {
                 if (firstName == null || lastName == null) return@setOnClickListener
 
                 userDao.insert(User(firstName = firstName, lastName = lastName))
-                rebuildUsers()
+
+                firstNameContainer.error = null
+                lastNameContainer.error = null
+
+                editFirstName.text?.clear()
+                editLastName.text?.clear()
             }
-        }
-    }
-
-    private fun rebuildUsers() {
-        UserList.setList(userDao.getUsers())
-        with(binding) {
-            firstNameContainer.error = null
-            lastNameContainer.error = null
-
-            textResult.text = userDao.getUsers().joinToString(separator = "\n")
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    companion object {
-        const val ERROR_MESSAGE = "Empty field"
     }
 }

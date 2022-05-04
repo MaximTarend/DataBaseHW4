@@ -13,14 +13,15 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="200dp"
         android:padding="10dp"
-        android:text="First Name:"
+        android:text="@string/first_name_"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
+
         android:id="@+id/first_name_container"
-        style="@style/ThemeOverlay.Material3.TextInputEditText.OutlinedBox"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
@@ -34,7 +35,7 @@
             android:id="@+id/edit_first_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="First Name" />
+            android:hint="@string/first_name" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -44,14 +45,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="300dp"
         android:padding="10dp"
-        android:text="Last Name:"
+        android:text="@string/last_name_"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/last_name_container"
-        style="@style/ThemeOverlay.Material3.TextInputEditText.OutlinedBox"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
@@ -65,7 +66,7 @@
             android:id="@+id/edit_last_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Last Name" />
+            android:hint="@string/last_name" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -77,23 +78,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/last_name_container"
-        android:text="Add USER"/>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_button">
-
-        <TextView
-            android:id="@+id/text_result"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            tools:text="table row" />
-    </ScrollView>
-
-
+        android:text="@string/add_user"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

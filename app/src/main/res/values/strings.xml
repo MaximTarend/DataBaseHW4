@@ -3,4 +3,9 @@
     <string name="room_database">Room DataBase</string>
     <string name="list">List</string>
     <string name="edit">Edit</string>
+    <string name="last_name">Enter your Last Name</string>
+    <string name="add_user">Add USER</string>
+    <string name="last_name_">Last Name:</string>
+    <string name="first_name">Enter your First Name</string>
+    <string name="first_name_">First Name:</string>
 </resources>

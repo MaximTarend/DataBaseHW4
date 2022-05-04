@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.hometrainng.databasehw4.adapter.ItemAdapter
+import by.hometrainng.databasehw4.appDatabase
 import by.hometrainng.databasehw4.databinding.FragmentListBinding
-import by.hometrainng.databasehw4.model.ListElement
-import by.hometrainng.databasehw4.model.UserList
+import by.hometrainng.databasehw4.extentions.addSpaceDecoration
 
 class FragmentList: Fragment() {
 
@@ -18,6 +18,12 @@ class FragmentList: Fragment() {
 
     private val adapter by lazy {
         ItemAdapter(requireContext())
+    }
+
+    private val userDao by lazy {
+        requireContext()
+            .appDatabase
+            .userDao()
     }
 
     override fun onCreateView(
@@ -37,17 +43,28 @@ class FragmentList: Fragment() {
         with(binding) {
             recyclerView.layoutManager = layoutManager
             recyclerView.adapter = adapter
-            adapter.submitList(UserList.getUserList())
+            rebuildList()
 
             swipeLayout.setOnRefreshListener {
-                adapter.submitList(UserList.getUserList())
+                rebuildList()
                 swipeLayout.isRefreshing = false
             }
+        }
+    }
+
+    private fun rebuildList() {
+        with(binding) {
+            adapter.submitList(userDao.getUsers())
+            recyclerView.addSpaceDecoration(DECORATION_SPACE)
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        private const val DECORATION_SPACE = 15
     }
 }
