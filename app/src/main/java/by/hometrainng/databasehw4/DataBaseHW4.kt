@@ -22,7 +22,7 @@ class DataBaseHW4: Application() {
 }
 
 val Context.appDatabase: AppDatabase
-    get() = when {
-        this is DataBaseHW4 -> appDatabase
+    get() = when (this) {
+        is DataBaseHW4 -> appDatabase
         else -> applicationContext.appDatabase
     }

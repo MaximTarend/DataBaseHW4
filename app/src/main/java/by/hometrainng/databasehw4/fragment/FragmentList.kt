@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import by.hometrainng.databasehw4.adapter.ItemAdapter
 import by.hometrainng.databasehw4.databinding.FragmentListBinding
 import by.hometrainng.databasehw4.model.ListElement
+import by.hometrainng.databasehw4.model.UserList
 
 class FragmentList: Fragment() {
 
@@ -32,15 +33,16 @@ class FragmentList: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-            val list = List(20) {
-                ListElement(1, "Maxik", "Torr")
-            }
         val layoutManager = LinearLayoutManager(view.context)
         with(binding) {
             recyclerView.layoutManager = layoutManager
             recyclerView.adapter = adapter
-            adapter.submitList(list)
+            adapter.submitList(UserList.getUserList())
 
+            swipeLayout.setOnRefreshListener {
+                adapter.submitList(UserList.getUserList())
+                swipeLayout.isRefreshing = false
+            }
         }
     }
 

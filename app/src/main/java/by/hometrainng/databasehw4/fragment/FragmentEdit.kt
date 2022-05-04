@@ -5,12 +5,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import by.hometrainng.databasehw4.appDatabase
 import by.hometrainng.databasehw4.databinding.FragmentEditDatabaseBinding
+import by.hometrainng.databasehw4.extentions.getTextOrSetError
+import by.hometrainng.databasehw4.model.User
+import by.hometrainng.databasehw4.model.UserList
 
 class FragmentEdit: Fragment() {
 
     private var _binding: FragmentEditDatabaseBinding? = null
     private val binding get() = requireNotNull(_binding)
+
+    private val userDao by lazy {
+        requireContext()
+            .appDatabase
+            .userDao()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,12 +36,34 @@ class FragmentEdit: Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
-            description.text = "Привет"
+            addButton.setOnClickListener {
+                val firstName = firstNameContainer.getTextOrSetError()
+                val lastName = lastNameContainer.getTextOrSetError()
+
+                if (firstName == null || lastName == null) return@setOnClickListener
+
+                userDao.insert(User(firstName = firstName, lastName = lastName))
+                rebuildUsers()
+            }
+        }
+    }
+
+    private fun rebuildUsers() {
+        UserList.setList(userDao.getUsers())
+        with(binding) {
+            firstNameContainer.error = null
+            lastNameContainer.error = null
+
+            textResult.text = userDao.getUsers().joinToString(separator = "\n")
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        const val ERROR_MESSAGE = "Empty field"
     }
 }
