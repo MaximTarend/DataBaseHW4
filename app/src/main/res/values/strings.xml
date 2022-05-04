@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">DataBase HW4</string>
+    <string name="room_database">Room DataBase</string>
+    <string name="list">List</string>
+    <string name="edit">Edit</string>
+    <string name="last_name">Enter Last Name</string>
+    <string name="add_user">Add USER</string>
+    <string name="last_name_">Last Name:</string>
+    <string name="first_name">Enter First Name</string>
+    <string name="first_name_">First Name:</string>
+    <string name="edit_user_button">Edit user</string>
+    <string name="enter_new_data_text">Enter new data</string>
 </resources>
