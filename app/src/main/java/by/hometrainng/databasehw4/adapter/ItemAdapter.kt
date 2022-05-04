@@ -11,14 +11,16 @@ import by.hometrainng.databasehw4.model.ListElement
 import by.hometrainng.databasehw4.model.User
 
 class ItemAdapter(
-    context: Context
+    context: Context,
+    private val onClicked: (User) -> Unit
 ): ListAdapter<User, UserViewHolder>(DIFF_UTIL) {
 
     private val layoutInflater = LayoutInflater.from(context)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
         return UserViewHolder(
-            binding = DatabaseItemBinding.inflate(layoutInflater, parent, false)
+            binding = DatabaseItemBinding.inflate(layoutInflater, parent, false),
+            onClicked = onClicked
         )
     }
 
@@ -39,12 +41,18 @@ class ItemAdapter(
 }
 
 class UserViewHolder(
-    private val binding: DatabaseItemBinding
+    private val binding: DatabaseItemBinding,
+    private val onClicked: (User) -> Unit
 ): RecyclerView.ViewHolder(binding.root) {
     fun bind (item: User) {
         with(binding) {
             firstName.text = item.firstName
             lastName.text = item.lastName
+            id.text = item.id.toString()
+
+            root.setOnClickListener {
+                onClicked(item)
+            }
         }
     }
 }

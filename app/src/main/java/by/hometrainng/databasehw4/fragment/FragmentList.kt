@@ -5,11 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.hometrainng.databasehw4.adapter.ItemAdapter
 import by.hometrainng.databasehw4.appDatabase
 import by.hometrainng.databasehw4.databinding.FragmentListBinding
-import by.hometrainng.databasehw4.extentions.addSpaceDecoration
+import by.hometrainng.databasehw4.dialog.FragmentEditDialog
 
 class FragmentList: Fragment() {
 
@@ -17,7 +18,9 @@ class FragmentList: Fragment() {
     private val binding get() = requireNotNull(_binding)
 
     private val adapter by lazy {
-        ItemAdapter(requireContext())
+        ItemAdapter(requireContext()) {
+            showEditCustomDialog(it.id)
+        }
     }
 
     private val userDao by lazy {
@@ -38,30 +41,28 @@ class FragmentList: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         val layoutManager = LinearLayoutManager(view.context)
         with(binding) {
+            recyclerView.addItemDecoration(DividerItemDecoration(requireContext(), 1))
             recyclerView.layoutManager = layoutManager
             recyclerView.adapter = adapter
-            rebuildList()
+            adapter.submitList(userDao.getUsers())
 
             swipeLayout.setOnRefreshListener {
-                rebuildList()
+                adapter.submitList(userDao.getUsers())
                 swipeLayout.isRefreshing = false
             }
-        }
-    }
-
-    private fun rebuildList() {
-        with(binding) {
-            adapter.submitList(userDao.getUsers())
-            recyclerView.addSpaceDecoration(DECORATION_SPACE)
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun showEditCustomDialog(id: Long) {
+        FragmentEditDialog.getInstance(id)
+            .show(childFragmentManager, null)
     }
 
     companion object {
